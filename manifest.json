@@ -1,0 +1,10 @@
+{
+  "name":"帝國通信",
+  "short_name":"帝國通信",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#efe8dc",
+  "theme_color":"#17130f",
+  "lang":"ja",
+  "description":"彼岸奇譚・帝國通信"
+}
