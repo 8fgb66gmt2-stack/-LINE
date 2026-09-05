@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17130f"><link rel="manifest" href="manifest.json">
+<title>帝國通信</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#efe8dc;color:#241d18;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Mincho ProN","Yu Mincho",serif}header{height:78px;background:#17130f;color:#f5ead8;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}header h1{font-size:22px;letter-spacing:.18em;margin:0}.seal{font-size:12px;opacity:.75}.app{height:calc(100vh - 78px);display:flex;flex-direction:column}.profile{padding:22px 20px 12px;border-bottom:1px solid #cfc2b0}.name{font-size:24px}.status{font-size:12px;color:#75675a;margin-top:5px}.chat{flex:1;overflow:auto;padding:18px 14px}.msg{max-width:82%;padding:11px 14px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:15px;box-shadow:0 1px 2px #0001}.in{background:#fffaf2;margin-right:auto;border-top-left-radius:4px}.out{background:#d9c9ae;margin-left:auto;border-top-right-radius:4px}.time{font-size:10px;color:#877a6d;margin-top:3px}.composer{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#f8f3eb;border-top:1px solid #cfc2b0}.composer input{flex:1;border:1px solid #c9baa7;border-radius:20px;padding:11px 14px;background:white;font:inherit}.composer button,.notify{border:0;border-radius:20px;padding:0 17px;background:#241d18;color:#fff8ec;font:inherit}.notify{margin:0 20px 12px;padding:10px;display:block;width:calc(100% - 40px)}
+</style></head>
+<body><header><h1>帝國通信</h1><span class="seal">帝國通信局</span></header><main class="app"><section class="profile"><div class="name">卜部川 樒</div><div class="status">オンライン ― 帝都文壇</div></section><section id="chat" class="chat"><div class="msg in">おや、君。こんな時間に通信とは珍しいね。<div class="time">13:32</div></div></section><button class="notify" id="notify">通信通知を許可する</button><form class="composer" id="form"><input id="input" autocomplete="off" placeholder="樒先生へ通信する…"><button>送信</button></form></main>
+<script>
+const chat=document.querySelector('#chat'),form=document.querySelector('#form'),input=document.querySelector('#input');
+form.addEventListener('submit',e=>{e.preventDefault();const t=input.value.trim();if(!t)return;add(t,'out');input.value='';setTimeout(()=>add('返事を急かすものぢゃないよ。僕はちゃんと読んでゐるサ。','in'),700)});
+function add(t,c){const d=document.createElement('div');d.className='msg '+c;d.innerHTML=t+'<div class="time">今</div>';chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+document.querySelector('#notify').onclick=async()=>{if(!('Notification'in window)){alert('この端末では通知に対応していません。');return}const p=await Notification.requestPermission();if(p==='granted'){new Notification('帝國通信',{body:'樒先生から通信が届きました。'});document.querySelector('#notify').textContent='通信通知：許可済み'}else alert('通知はまだ許可されていないようだ。')};
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
